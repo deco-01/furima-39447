@@ -32,14 +32,12 @@ Things you may want to cover:
 | ------------------- | ------ | ----------------------------------- |
 | nickname            | string | null: false                         |
 | email               | string | null: false                         |
-| password            | string | null: false                         |
+| encrypted_password  | string | null: false                         |
 | family_name         | string | null: false                         |
 | first_name          | string | null: false                         |
 | family_name_kana    | string | null: false                         |
 | first_name_kana     | string | null: false                         |
 | birth_day           | date   | null: false                         |
-<!-- | encrypted_password  | string | null: false |
-| introduction        | text   |             | -->
 
 ### Association
 
@@ -52,7 +50,6 @@ Things you may want to cover:
 
 | Column             | Type   | Options                         |
 | ------------------ | ------ | ------------------------------- |
-| user               | integer| null: false,  foreign_key: true |
 | post_code          | string | null: false                     |
 | prefecture         | string | null: false                     |
 | city               | string | null: false                     |
@@ -62,7 +59,7 @@ Things you may want to cover:
 
 ### Association
 
-- belongs_to :user
+- belongs_to :item_users
 
 
 ## items テーブル
@@ -70,22 +67,15 @@ Things you may want to cover:
 | Column             | Type       | Options                         |
 | ------------------ | ------ --- | ------------------------------- |
 | item_name          | string     | null: false                     |
-| item_image         | string     | null: false                     |
 | price              | integer    | null: false                     |
 | description        | text       | null: false                     |
-| category           | string     | null: false                     |
-| condition          | string     | null: false                     |
-| Delivery Charges   | string     | null: false                     |
-| area               | string     | null: false                     |
-| handing_time       | string     | null: false                     |
-| commission         | string     | null: false                     |
-| Sales_profit       | string     | null: false                     |
+| price_preservation | string     | null: false                     |
 | user               | references | null: false, foreign_key: true  |
 
 ### Association
 
 - has_many :item_users
-- has_many :users, through: :item_users
+- belongs_to :user
 
 
 ## item_users テーブル
@@ -94,8 +84,16 @@ Things you may want to cover:
 | ------------------ | ---------- | ------------------------------ |
 | item               | references | null: false, foreign_key: true |
 | user               | references | null: false, foreign_key: true |
+| buyer              | references | null: false, foreign_key: true |
+| category           | string     | null: false                    |
+| condition          | string     | null: false                    |
+| delivery_charges   | string     | null: false                    |
+| area               | string     | null: false                    |
+| handing_time       | string     | null: false                    |
+
 
 ### Association
 
 - belongs_to :item
 - belongs_to :user
+- belongs_to :buyer

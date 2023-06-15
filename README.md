@@ -41,21 +41,21 @@ Things you may want to cover:
 
 ### Association
 
+- has_many :items
 - has_many :orders
-- has_many :items, through: :orders
 
 
 ## buyers テーブル
 
-| Column             | Type   | Options                         |
-| ------------------ | ------ | ------------------------------- |
-| post_code          | string | null: false                     |
-| prefecture         | string | null: false                     |
-| city               | string | null: false                     |
-| address            | string | null: false                     |
-| building_name      | string |                                 |
-| phone_number       | string | null: false                     |
-| orders_id          | bigint | null: false, foreign_key: true  |
+| Column             | Type       | Options                         |
+| ------------------ | ---------- | ------------------------------- |
+| post_code          | string     | null: false                     |
+| prefecture_id      | string     | null: false                     |
+| city               | string     | null: false                     |
+| address            | string     | null: false                     |
+| building_name      | string     |                                 |
+| phone_number       | string     | null: false                     |
+| order              | references | null: false, foreign_key: true  |
 
 
 ### Association
@@ -81,7 +81,7 @@ Things you may want to cover:
 ### Association
 
 - has_many :orders
-- has_many :users, through: :orders
+- belongs_to :user
 
 
 ## orders テーブル
@@ -94,6 +94,6 @@ Things you may want to cover:
 
 ### Association
 
-- belongs_to :items
-- belongs_to :users
-- has_one :buyers
+- belongs_to :item
+- belongs_to :user
+- has_one :buyer

@@ -41,7 +41,7 @@ Things you may want to cover:
 
 ### Association
 
-- belongs_to :orders
+- has_many :orders
 - has_many :items, through: :orders
 
 
@@ -60,7 +60,7 @@ Things you may want to cover:
 
 ### Association
 
-- belongs_to :orders
+- belongs_to :order
 
 
 ## items テーブル
@@ -80,7 +80,7 @@ Things you may want to cover:
 
 ### Association
 
-- belongs_to :orders
+- has_many :orders
 - has_many :users, through: :orders
 
 
@@ -94,6 +94,6 @@ Things you may want to cover:
 
 ### Association
 
-- has_many :items
-- has_many :users
-- has_many :buyers
+- belongs_to :items
+- belongs_to :users
+- has_one :buyers

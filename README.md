@@ -50,7 +50,7 @@ Things you may want to cover:
 | Column             | Type       | Options                         |
 | ------------------ | ---------- | ------------------------------- |
 | post_code          | string     | null: false                     |
-| prefecture_id      | string     | null: false                     |
+| prefecture_id      | integer    | null: false                     |
 | city               | string     | null: false                     |
 | address            | string     | null: false                     |
 | building_name      | string     |                                 |
@@ -74,13 +74,13 @@ Things you may want to cover:
 | category_id         | integer    | null: false                     |
 | condition_id        | integer    | null: false                     |
 | delivery_charges_id | integer    | null: false                     |
-| area_id             | integer    | null: false                     |
+| prefecture_id       | integer    | null: false                     |
 | handing_time_id     | integer    | null: false                     |
 
 
 ### Association
 
-- has_many :orders
+- has_many :order
 - belongs_to :user
 
 

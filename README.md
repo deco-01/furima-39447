@@ -73,14 +73,14 @@ Things you may want to cover:
 | user                | references | null: false, foreign_key: true  |
 | category_id         | integer    | null: false                     |
 | condition_id        | integer    | null: false                     |
-| delivery_charges_id | integer    | null: false                     |
+| delivery_charge_id  | integer    | null: false                     |
 | prefecture_id       | integer    | null: false                     |
 | handing_time_id     | integer    | null: false                     |
 
 
 ### Association
 
-- has_many :order
+- has_many :orders
 - belongs_to :user
 
 

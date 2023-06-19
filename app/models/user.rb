@@ -4,13 +4,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :email, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/ }
-  validates :password, length: { minimum: 6 }, format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)/ }
-  validates :password_confirmation, presence: true
+  validates :password,
+            format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+\z/, message: 'must contain at least one letter and one digit' }
   validates :family_name_kana, :first_name_kana, presence: true, format: { with: /\A[\p{katakana}\p{blank}ー－]+\z/ }
   validates :birth_day, presence: true
   validates :nickname, presence: true
 
-  validates :family_name, presence: true, format: { with: /\A[一-龥ぁ-んァ-ヶー－]+\z/, message: 'is invalid' }
-  validates :first_name, presence: true, format: { with: /\A[一-龥ぁ-んァ-ヶー－]+\z/, message: 'is invalid' }
+  validates :family_name, presence: true, format: { with: /\A[一-龥ぁ-んァ-ヶー－々]+\z/, message: 'is invalid' }
+  validates :first_name, presence: true, format: { with: /\A[一-龥ぁ-んァ-ヶー－々]+\z/, message: 'is invalid' }
 end

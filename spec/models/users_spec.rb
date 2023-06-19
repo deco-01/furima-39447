@@ -34,7 +34,7 @@ RSpec.describe User, type: :model do
       @user.password = '12345'
       @user.password_confirmation = '12345'
       @user.valid?
-      expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
+      expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
     end
 
     it 'passwordとpassword_confirmationが一致しないと登録できない' do
@@ -59,7 +59,7 @@ RSpec.describe User, type: :model do
       @user.family_name = 'Smith'
       @user.first_name = 'John'
       @user.valid?
-      expect(@user.errors.full_messages).to include("Family name is invalid", "First name is invalid")
+      expect(@user.errors.full_messages).to include('Family name is invalid', 'First name is invalid')
     end
 
     it 'お名前カナ(全角)の名字が必須であること' do
@@ -78,9 +78,9 @@ RSpec.describe User, type: :model do
       @user.family_name_kana = '山田'
       @user.first_name_kana = '太郎'
       @user.valid?
-      expect(@user.errors.full_messages).to include("Family name kana is invalid", "First name kana is invalid")
+      expect(@user.errors.full_messages).to include('Family name kana is invalid', 'First name kana is invalid')
     end
-    
+
     it '生年月日が必須であること' do
       @user.birth_day = nil
       @user.valid?

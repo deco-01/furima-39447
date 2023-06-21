@@ -2,8 +2,8 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    @item = Item.all
-    @items = [] if @items.nil?
+    # @item = Item.all
+    # @items = [] if @items.nil?
   end
 
   def some_action

@@ -1,2 +1,0 @@
-class Activestorage < ApplicationRecord
-end

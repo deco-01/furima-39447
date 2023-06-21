@@ -60,6 +60,68 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is not a number')
       end
+
+      it '商品画像が必須であること' do
+        @item.image = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Image can't be blank")
+      end
+    end
+
+    context '商品出品に失敗する場合' do
+      it 'カテゴリーに「---」が選択されている場合は出品できないこと' do
+        @item.category_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Category Select')
+      end
+
+      it '商品の状態に「---」が選択されている場合は出品できないこと' do
+        @item.condition_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Condition Select')
+      end
+
+      it '配送料の負担に「---」が選択されている場合は出品できないこと' do
+        @item.delivery_charge_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Delivery charge Select')
+      end
+
+      it '発送元の地域に「---」が選択されている場合は出品できないこと' do
+        @item.prefecture_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Prefecture Select')
+      end
+
+      it '発送までの日数に「---」が選択されている場合は出品できないこと' do
+        @item.handing_time_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Handing time Select')
+      end
+
+      it '価格に半角数字以外が含まれている場合は出品できないこと' do
+        @item.price = '300a'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is not a number')
+      end
+
+      it '価格が300円未満では出品できないこと' do
+        @item.price = 299
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
+      end
+
+      it '価格が9_999_999円を超えると出品できないこと' do
+        @item.price = 10_000_000
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
+      end
+
+      it 'userが紐付いていなければ出品できないこと' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
+      end
     end
   end
 end

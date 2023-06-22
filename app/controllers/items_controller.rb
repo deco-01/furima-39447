@@ -2,8 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    # @item = Item.all
-    # @items = [] if @items.nil?
+    @items = Item.order('created_at DESC')
   end
 
   def some_action
@@ -23,6 +22,10 @@ class ItemsController < ApplicationController
       flash.now[:alert] = @item.errors.full_messages
       render :new
     end
+  end
+
+  def show
+    # @item = Item.find(params[:id])
   end
 
   private

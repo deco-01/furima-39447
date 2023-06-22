@@ -33,4 +33,8 @@ class Item < ApplicationRecord
   def profit
     price - commission
   end
+
+  def sold_out?
+    # 在庫状況を判定する処理...
+  end
 end

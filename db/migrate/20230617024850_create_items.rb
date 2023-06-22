@@ -16,4 +16,8 @@ class CreateItems < ActiveRecord::Migration[6.0]
       t.timestamps
     end
   end
+
+  def change
+    add_column :items, :image, :string  # 商品画像のファイル名を保存するカラム
+  end
 end

@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.order('created_at DESC')
+    @items = [] if @items.nil?
   end
 
   def some_action
@@ -25,7 +26,12 @@ class ItemsController < ApplicationController
   end
 
   def show
-    # @item = Item.find(params[:id])
+    @item = Item.find(params[:id])
+    @current_user = current_user
+  end
+
+  def destroy
+
   end
 
   private

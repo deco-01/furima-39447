@@ -30,9 +30,6 @@ class ItemsController < ApplicationController
     @current_user = current_user
   end
 
-  def destroy
-  end
-
   def edit
     redirect_to root_path unless valid_user?
   end

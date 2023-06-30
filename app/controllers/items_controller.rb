@@ -13,7 +13,6 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     if @item.save
-      Order.create(user_id: current_user.id, item_id: @item.id)
       redirect_to root_path
     else
       flash.now[:alert] = @item.errors.full_messages
@@ -25,7 +24,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @current_user = current_user
   
-    if user_signed_in? && (@item.user == current_user || (!@item.order.present? && !@item.sold_out?))
+    if user_signed_in? && (@item.user == current_user || (@item.order.blank? && !@item.order&.sold))
       render 'show'
     else
       redirect_to root_path
@@ -33,8 +32,10 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    if current_user != @item.user || @item.present?
-    redirect_to root_path
+    if current_user == @item.user
+      render :edit
+    else
+      redirect_to root_path
     end
   end
 

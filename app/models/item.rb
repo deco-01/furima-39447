@@ -1,5 +1,7 @@
 class Item < ApplicationRecord
   belongs_to :user
+  has_one :order
+
   validates :image, presence: true
   validates :name, presence: true
   validates :description, presence: true
@@ -25,16 +27,4 @@ class Item < ApplicationRecord
   belongs_to :delivery_charge
   belongs_to :prefecture
   belongs_to :handing_time
-
-  def commission
-    (price * 0.1).floor
-  end
-
-  def profit
-    price - commission
-  end
-
-  def sold_out?
-    # 在庫状況を判定する処理...
-  end
 end

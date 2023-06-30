@@ -23,16 +23,11 @@ class ItemsController < ApplicationController
   def show
     @item = Item.find(params[:id])
     @current_user = current_user
-  
-    if user_signed_in? && (@item.user == current_user || (@item.order.blank? && !@item.order&.sold))
-      render 'show'
-    else
-      redirect_to root_path
-    end
+    render 'show'
   end
-
+  
   def edit
-    if current_user == @item.user
+    if current_user == @item.user && !@item.order.present?
       render :edit
     else
       redirect_to root_path

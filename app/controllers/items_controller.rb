@@ -4,12 +4,6 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.order('created_at DESC')
-    @items = [] if @items.nil?
-  end
-
-  def some_action
-    @items = Item.where(some_condition: true)
-    render :index
   end
 
   def new
@@ -28,28 +22,28 @@ class ItemsController < ApplicationController
 
   def show
     @current_user = current_user
+    render 'show'
   end
 
   def edit
-    redirect_to root_path unless valid_user?
+    if current_user == @item.user && !@item.order.present?
+      render :edit
+    else
+      redirect_to root_path
+    end
   end
 
   def update
     if @item.update(item_params)
       redirect_to item_path(@item)
     else
-      flash.now[:alert]
       render :edit
     end
   end
 
-  def back_to_show
-    @item = Item.find(params { :id })
-    redirect_to @item
-  end
-
   def destroy
-    if valid_user?
+    if user_signed_in? && @item.user_id == current_user.id
+      @item.order.destroy if @item.order.present?
       @item.destroy
       redirect_to root_path
     else
@@ -61,10 +55,6 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find(params[:id])
-  end
-
-  def valid_user?
-    user_signed_in? && @item.user_id == current_user.id
   end
 
   def item_params

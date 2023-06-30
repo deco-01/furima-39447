@@ -24,7 +24,7 @@ class ItemsController < ApplicationController
     @current_user = current_user
     render 'show'
   end
-  
+
   def edit
     if current_user == @item.user && !@item.order.present?
       render :edit
@@ -40,7 +40,6 @@ class ItemsController < ApplicationController
       render :edit
     end
   end
-
 
   def destroy
     if user_signed_in? && @item.user_id == current_user.id

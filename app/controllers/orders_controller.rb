@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_item, only: [:index, :create, :non_purchased_item]
 
   def index
-    @item = Item.find(params[:item_id])
-  
     if current_user.id == @item.user_id || @item.order.present?
       redirect_to root_path
     else
@@ -11,7 +11,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order = OrderForm.new(order_params)
     if @order.valid?
       pay_item
@@ -26,15 +25,18 @@ class OrdersController < ApplicationController
   def show
   end
 
-
   private
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
 
   def order_params
     params.require(:order).permit(:post_code, :prefecture_id, :city, :address, :building_name, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"] 
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
       amount: @item.price,
       card: order_params[:token],
@@ -43,8 +45,6 @@ class OrdersController < ApplicationController
   end
 
   def non_purchased_item
-    @item = Item.find(params[:item_id])
     redirect_to root_path if current_user.id == @item.user_id || @item.order.present?
   end
-
 end

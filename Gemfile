@@ -71,4 +71,4 @@ gem 'active_hash'
 gem 'payjp'
 gem 'pry-rails'
 gem "aws-sdk-s3", require: false
-# gem 'mail', '2.7.1'
+gem 'mail', '2.7.1'
